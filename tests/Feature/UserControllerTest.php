@@ -9,7 +9,8 @@ use Tests\TestCase;
 class UserControllerTest extends TestCase
 {
 
-    public function testLoginPage(){
+    public function testLoginPage()
+    {
 
         $this->get("/login")
             ->assertSeeText("Login");
@@ -39,6 +40,17 @@ class UserControllerTest extends TestCase
             "user" => "wrong",
             "password" => "wrong",
         ])->assertSeeText("user or password is wrong");
+    }
+
+    public function testLogout()
+    {
+
+        $this->withSession([
+            "user" => "budhi"
+        ])->post("/logout")
+            ->assertRedirect("/")
+            ->assertSessionMissing("user");
+
     }
 
 }

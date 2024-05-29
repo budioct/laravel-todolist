@@ -43,7 +43,7 @@ class UserController extends Controller
 
         // success login
         if ($this->userService->login($user, $password)) {
-            $request->session()->put("user", $user);
+            $request->session()->put("user", $user); // akan membuat session dengan key user
             return redirect("/");
         }
 
@@ -55,8 +55,9 @@ class UserController extends Controller
 
     }
 
-    public function doLogout()
+    public function doLogout(Request $request): RedirectResponse
     {
-
+        $request->session()->forget("user"); // forget(key) hapus session
+        return redirect("/");
     }
 }
