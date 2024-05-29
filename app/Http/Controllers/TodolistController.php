@@ -30,6 +30,19 @@ class TodolistController extends Controller
     public function addTodo(Request $request)
     {
 
+        $todo = $request->input("todo");
+
+        $todoList = $this->todoListService->getTodoList();
+        if (empty($todo)){
+            return response()->view("todolist.todolist", [
+                "title" => "TodoList",
+                "error" => "Todo is required",
+                "todolist" => $todoList,
+            ]);
+        }
+
+        $this->todoListService->saveTodo(uniqid(), $todo);
+        return redirect()->action([TodolistController::class, "todoList"]);
     }
 
     public function removeTodo(Request $request, string $todoId)
