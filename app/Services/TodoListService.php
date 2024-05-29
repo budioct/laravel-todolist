@@ -9,4 +9,6 @@ interface TodoListService
 
     public function getTodoList(): array;
 
+    public function removeTodo(string $todoId);
+
 }
